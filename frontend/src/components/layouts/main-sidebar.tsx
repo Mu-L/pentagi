@@ -103,10 +103,7 @@ export const MainSidebar = () => {
     const { addFavoriteFlow, favoriteFlowIds, removeFavoriteFlow } = useFavorites();
     const { flows } = useSidebarFlows();
 
-    const flowId = useMemo(
-        () => (flowIdParam ? Number(flowIdParam) : null),
-        [flowIdParam],
-    );
+    const flowId = useMemo(() => (flowIdParam ? Number(flowIdParam) : null), [flowIdParam]);
 
     const isOnFlowPage = useMemo(
         () => location.pathname.startsWith('/flows/') && flowIdParam && flowIdParam !== 'new',

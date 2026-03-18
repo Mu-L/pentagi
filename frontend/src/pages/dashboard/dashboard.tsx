@@ -16,6 +16,7 @@ const periodLabels: Record<UsageStatsPeriod, string> = {
 };
 
 const Dashboard = () => {
+    const [activeTab, setActiveTab] = useState('analytics');
     const [period, setPeriod] = useState<UsageStatsPeriod>(UsageStatsPeriod.Week);
 
     return (
@@ -41,7 +42,8 @@ const Dashboard = () => {
             <div className="flex flex-col gap-6 p-4">
                 <Tabs
                     className="w-full"
-                    defaultValue="analytics"
+                    onValueChange={setActiveTab}
+                    value={activeTab}
                 >
                     <div className="flex items-center justify-between">
                         <TabsList>
@@ -49,21 +51,23 @@ const Dashboard = () => {
                             <TabsTrigger value="overview">Overview</TabsTrigger>
                         </TabsList>
 
-                        <Tabs
-                            onValueChange={(value) => setPeriod(value as UsageStatsPeriod)}
-                            value={period}
-                        >
-                            <TabsList>
-                                {Object.entries(periodLabels).map(([value, label]) => (
-                                    <TabsTrigger
-                                        key={value}
-                                        value={value}
-                                    >
-                                        {label}
-                                    </TabsTrigger>
-                                ))}
-                            </TabsList>
-                        </Tabs>
+                        {activeTab === 'analytics' && (
+                            <Tabs
+                                onValueChange={(value) => setPeriod(value as UsageStatsPeriod)}
+                                value={period}
+                            >
+                                <TabsList>
+                                    {Object.entries(periodLabels).map(([value, label]) => (
+                                        <TabsTrigger
+                                            key={value}
+                                            value={value}
+                                        >
+                                            {label}
+                                        </TabsTrigger>
+                                    ))}
+                                </TabsList>
+                            </Tabs>
+                        )}
                     </div>
 
                     <TabsContent value="analytics">

@@ -136,14 +136,12 @@ export const DashboardAnalytics = ({ period }: { period: UsageStatsPeriod }) => 
                                         strokeDasharray="3 3"
                                     />
                                     <XAxis
-                                        className="text-xs"
                                         dataKey="date"
-                                        tick={{ fill: 'var(--color-muted-foreground)' }}
+                                        tick={{ fill: 'var(--color-muted-foreground)', fontSize: 12 }}
                                         tickMargin={8}
                                     />
                                     <YAxis
-                                        className="text-xs"
-                                        tick={{ fill: 'var(--color-muted-foreground)' }}
+                                        tick={{ fill: 'var(--color-muted-foreground)', fontSize: 12 }}
                                         tickFormatter={formatTokenCount}
                                         tickMargin={8}
                                     />
@@ -191,14 +189,12 @@ export const DashboardAnalytics = ({ period }: { period: UsageStatsPeriod }) => 
                                         strokeDasharray="3 3"
                                     />
                                     <XAxis
-                                        className="text-xs"
                                         dataKey="date"
-                                        tick={{ fill: 'var(--color-muted-foreground)' }}
+                                        tick={{ fill: 'var(--color-muted-foreground)', fontSize: 12 }}
                                         tickMargin={8}
                                     />
                                     <YAxis
-                                        className="text-xs"
-                                        tick={{ fill: 'var(--color-muted-foreground)' }}
+                                        tick={{ fill: 'var(--color-muted-foreground)', fontSize: 12 }}
                                         tickFormatter={(value) => formatCost(value)}
                                         tickMargin={8}
                                     />
@@ -244,14 +240,12 @@ export const DashboardAnalytics = ({ period }: { period: UsageStatsPeriod }) => 
                                         strokeDasharray="3 3"
                                     />
                                     <XAxis
-                                        className="text-xs"
                                         dataKey="date"
-                                        tick={{ fill: 'var(--color-muted-foreground)' }}
+                                        tick={{ fill: 'var(--color-muted-foreground)', fontSize: 12 }}
                                         tickMargin={8}
                                     />
                                     <YAxis
-                                        className="text-xs"
-                                        tick={{ fill: 'var(--color-muted-foreground)' }}
+                                        tick={{ fill: 'var(--color-muted-foreground)', fontSize: 12 }}
                                         tickMargin={8}
                                     />
                                     <Tooltip
@@ -289,14 +283,12 @@ export const DashboardAnalytics = ({ period }: { period: UsageStatsPeriod }) => 
                                         strokeDasharray="3 3"
                                     />
                                     <XAxis
-                                        className="text-xs"
                                         dataKey="date"
-                                        tick={{ fill: 'var(--color-muted-foreground)' }}
+                                        tick={{ fill: 'var(--color-muted-foreground)', fontSize: 12 }}
                                         tickMargin={8}
                                     />
                                     <YAxis
-                                        className="text-xs"
-                                        tick={{ fill: 'var(--color-muted-foreground)' }}
+                                        tick={{ fill: 'var(--color-muted-foreground)', fontSize: 12 }}
                                         tickMargin={8}
                                     />
                                     <Tooltip

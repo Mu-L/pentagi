@@ -1,4 +1,4 @@
-import { ChevronDown, Copy, Download, ExternalLink, GripVertical, Loader2, NotepadText } from 'lucide-react';
+import { ChevronDown, Copy, Download, ExternalLink, GripVertical, Loader2, NotepadText, Star } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -23,6 +23,7 @@ import { useFlowTabDetection } from '@/hooks/use-flow-tab-detection';
 import { Log } from '@/lib/log';
 import { copyToClipboard, downloadTextFile, generateFileName, generateReport } from '@/lib/report';
 import { formatName } from '@/lib/utils/format';
+import { useFavorites } from '@/providers/favorites-provider';
 import { useFlow } from '@/providers/flow-provider';
 
 const FlowReportDropdown = () => {
@@ -145,8 +146,8 @@ const Flow = () => {
     const { isDesktop } = useBreakpoint();
     const navigate = useNavigate();
 
-    // Get flow data from FlowProvider
-    const { flowData, flowError, isLoading: isFlowLoading } = useFlow();
+    const { flowData, flowError, flowId, isLoading: isFlowLoading } = useFlow();
+    const { isFavoriteFlow, toggleFavoriteFlow } = useFavorites();
 
     // Redirect to flows list if there's an error loading flow data or flow not found
     useEffect(() => {
@@ -206,7 +207,19 @@ const Flow = () => {
                             </BreadcrumbList>
                         </Breadcrumb>
                     </div>
-                    {!!(flowData?.tasks ?? [])?.length && <FlowReportDropdown />}
+                    <div className="flex items-center gap-2">
+                        {flowId && (
+                            <Button
+                                className="shrink-0"
+                                onClick={() => toggleFavoriteFlow(flowId)}
+                                size="icon"
+                                variant="ghost"
+                            >
+                                <Star className={isFavoriteFlow(flowId) ? 'fill-yellow-500 stroke-yellow-500' : ''} />
+                            </Button>
+                        )}
+                        {!!(flowData?.tasks ?? [])?.length && <FlowReportDropdown />}
+                    </div>
                 </div>
             </header>
             <div className="relative flex h-[calc(100dvh-3rem)] w-full max-w-full flex-1">

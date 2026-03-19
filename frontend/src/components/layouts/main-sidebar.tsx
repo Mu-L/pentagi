@@ -17,7 +17,7 @@ import {
     UserIcon,
 } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { Link, useLocation, useMatch, useParams } from 'react-router-dom';
+import { Link, useMatch, useParams } from 'react-router-dom';
 
 import type { Flow } from '@/providers/sidebar-flows-provider';
 import type { Theme } from '@/providers/theme-provider';
@@ -95,7 +95,6 @@ export const MainSidebar = () => {
     const isTemplatesActive = useMatch('/templates/*');
     const isSettingsActive = useMatch('/settings/*');
     const { flowId: flowIdParam } = useParams<{ flowId: string }>();
-    const location = useLocation();
 
     const { authInfo, logout } = useUser();
     const user = authInfo?.user;
@@ -104,11 +103,6 @@ export const MainSidebar = () => {
     const { flows } = useSidebarFlows();
 
     const flowId = useMemo(() => (flowIdParam ? Number(flowIdParam) : null), [flowIdParam]);
-
-    const isOnFlowPage = useMemo(
-        () => location.pathname.startsWith('/flows/') && flowIdParam && flowIdParam !== 'new',
-        [location.pathname, flowIdParam],
-    );
 
     const favoriteFlows = useMemo(
         () =>
@@ -126,21 +120,6 @@ export const MainSidebar = () => {
                 .slice(0, 5),
         [flows, favoriteFlowIds],
     );
-
-    const currentFlow = useMemo(() => {
-        if (!isOnFlowPage || !flowId) {
-            return null;
-        }
-
-        if (
-            recentFlows.some((flow) => Number(flow.id) === flowId) ||
-            favoriteFlows.some((flow) => Number(flow.id) === flowId)
-        ) {
-            return null;
-        }
-
-        return flows.find((flow) => Number(flow.id) === flowId) ?? null;
-    }, [isOnFlowPage, flowId, flows, recentFlows, favoriteFlows]);
 
     return (
         <Sidebar collapsible="icon">
@@ -222,21 +201,6 @@ export const MainSidebar = () => {
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
-
-                {currentFlow && (
-                    <SidebarGroup>
-                        <SidebarGroupContent>
-                            <SidebarMenu>
-                                <FlowMenuItem
-                                    activeFlowId={flowId}
-                                    flow={currentFlow}
-                                    isFavorite={false}
-                                    onToggleFavorite={addFavoriteFlow}
-                                />
-                            </SidebarMenu>
-                        </SidebarGroupContent>
-                    </SidebarGroup>
-                )}
 
                 {recentFlows.length > 0 && (
                     <SidebarGroup>

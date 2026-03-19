@@ -14,6 +14,7 @@ import {
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import FlowGraph from '@/features/flows/dashboard/flow-graph';
@@ -118,18 +119,21 @@ export const FlowDashboardAnalytics = ({
             {!!graphViews.length && defaultGraphTab && (
                 <Tabs defaultValue={defaultGraphTab}>
                     <Card>
-                        <CardHeader className="items-start">
-                            <TabsList className="bg-background flex-wrap">
-                                {graphViews.map((view) => (
-                                    <TabsTrigger
-                                        className="data-[state=active]:bg-card"
-                                        key={view.value}
-                                        value={view.value}
-                                    >
-                                        {view.label}
-                                    </TabsTrigger>
-                                ))}
-                            </TabsList>
+                        <CardHeader className="items-start pb-1">
+                            <ScrollArea className="w-full pb-3">
+                                <TabsList className="bg-background flex w-fit">
+                                    {graphViews.map((view) => (
+                                        <TabsTrigger
+                                            className="data-[state=active]:bg-card"
+                                            key={view.value}
+                                            value={view.value}
+                                        >
+                                            {view.label}
+                                        </TabsTrigger>
+                                    ))}
+                                </TabsList>
+                                <ScrollBar orientation="horizontal" />
+                            </ScrollArea>
                         </CardHeader>
                         <CardContent>
                             {graphViews.map((view) => (

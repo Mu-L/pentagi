@@ -1,21 +1,13 @@
 import type { ColumnDef } from '@tanstack/react-table';
 
-import {
-    ArrowDown,
-    ArrowUp,
-    FileText,
-    Loader2,
-    MoreHorizontal,
-    Pencil,
-    Plus,
-    Trash,
-} from 'lucide-react';
+import { ArrowDown, ArrowUp, FileText, Loader2, MoreHorizontal, Pencil, Plus, Trash } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import ConfirmationDialog from '@/components/shared/confirmation-dialog';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
+import { ContextMenuItem, ContextMenuSeparator } from '@/components/ui/context-menu';
 import { DataTable } from '@/components/ui/data-table';
 import {
     DropdownMenu,
@@ -160,9 +152,27 @@ const Templates = () => {
             enableHiding: false,
             header: () => null,
             id: 'actions',
+            meta: { preventRowClick: true },
             size: 48,
         },
     ];
+
+    const renderRowContextMenu = (template: Template) => (
+        <>
+            <ContextMenuItem onClick={() => handleTemplateOpen(template.id)}>
+                <Pencil />
+                Edit
+            </ContextMenuItem>
+            <ContextMenuSeparator />
+            <ContextMenuItem
+                disabled={deletingIds.has(template.id)}
+                onClick={() => handleDeleteDialogOpen(template)}
+            >
+                <Trash />
+                {deletingIds.has(template.id) ? 'Deleting...' : 'Delete'}
+            </ContextMenuItem>
+        </>
+    );
 
     const pageHeader = (
         <header className="bg-background sticky top-0 z-10 flex h-12 w-full shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
@@ -228,6 +238,7 @@ const Templates = () => {
                     filterColumn="title"
                     filterPlaceholder="Filter templates..."
                     onRowClick={(template) => handleTemplateOpen(template.id)}
+                    renderRowContextMenu={renderRowContextMenu}
                 />
 
                 <ConfirmationDialog
